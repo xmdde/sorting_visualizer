@@ -1,5 +1,5 @@
 # sorting_visualizer
-Simple app for Bubble Sort visualization.
-
+Simple JavaFX application for visualization of sorting algorithms:
+- Bubble Sort
 
 *work in progress*
