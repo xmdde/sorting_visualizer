@@ -6,7 +6,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
@@ -20,50 +19,51 @@ public class Visualizer extends Application {
 
         BorderPane borderPane = new BorderPane();
         HBox hBox = new HBox();
-        Button bsortBtn = new Button("Bubble Sort");
-        Button genBtn = new Button("Generate");
-        Button isortBtn = new Button("Insertion Sort");
-        HBox buttons = new HBox(bsortBtn, isortBtn, genBtn);
         hBox.setAlignment(Pos.BOTTOM_CENTER);
-        BarChart barChart = new BarChart(30);
+        ButtonsBox buttons = new ButtonsBox();
+        BarChart barChart = new BarChart(36);
         hBox.getChildren().addAll(barChart);
         borderPane.setCenter(hBox);
         borderPane.setTop(buttons);
         Scene scene = new Scene(borderPane, 1200, 750);
 
-        bsortBtn.setOnMouseClicked( e -> {
-            genBtn.setDisable(true);
-            bsortBtn.setDisable(true);
-            isortBtn.setDisable(true);
+        buttons.bsortBtn.setOnMouseClicked( e -> {
+            buttons.buttonsDisable();
             SequentialTransition sort = barChart.BubbleSort();
             sort.play();
             sort.setOnFinished(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
-                    isortBtn.setDisable(false);
-                    genBtn.setDisable(false);
-                    bsortBtn.setDisable(false);
+                    buttons.buttonsAble();
                 }
             });
         });
 
-        isortBtn.setOnMouseClicked( e -> {
-            genBtn.setDisable(true);
-            bsortBtn.setDisable(true);
-            isortBtn.setDisable(true);
+        buttons.isortBtn.setOnMouseClicked( e -> {
+            buttons.buttonsDisable();
             SequentialTransition sort = barChart.insertionSort();
             sort.play();
             sort.setOnFinished(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
-                    isortBtn.setDisable(false);
-                    genBtn.setDisable(false);
-                    bsortBtn.setDisable(false);
+                    buttons.buttonsAble();
                 }
             });
         });
 
-        genBtn.setOnMouseClicked( e -> {
+        buttons.selBtn.setOnMouseClicked( e -> {
+            buttons.buttonsDisable();
+            SequentialTransition sort = barChart.selectionSort();
+            sort.play();
+            sort.setOnFinished(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent actionEvent) {
+                    buttons.buttonsAble();
+                }
+            });
+        });
+
+        buttons.genBtn.setOnMouseClicked( e -> {
             barChart.generateNewValues();
         });
 
