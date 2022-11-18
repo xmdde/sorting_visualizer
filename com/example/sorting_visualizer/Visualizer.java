@@ -2,6 +2,8 @@ package com.example.sorting_visualizer;
 
 import javafx.animation.SequentialTransition;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -10,7 +12,6 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.time.Duration;
 
 public class Visualizer extends Application {
 
@@ -30,18 +31,21 @@ public class Visualizer extends Application {
         Scene scene = new Scene(borderPane, 1200, 750);
 
         sortBtn.setOnMouseClicked( e -> {
-            //genBtn.setVisible(false);
+            genBtn.setDisable(true);
+            sortBtn.setDisable(true);
             SequentialTransition sort = barChart.BubbleSort();
             sort.play();
-            //genBtn.setVisible(true);
+            sort.setOnFinished(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent actionEvent) {
+                    genBtn.setDisable(false);
+                    sortBtn.setDisable(false);
+                }
+            });
         });
 
         genBtn.setOnMouseClicked( e -> {
-            genBtn.setDisable(true);
-            sortBtn.setDisable(true);
             barChart.generateNewValues();
-            genBtn.setDisable(false);
-            sortBtn.setDisable(false);
         });
 
         stage.setTitle("Sorting Visualization");

@@ -11,11 +11,11 @@ import java.util.Random;
 
 public class BarChart extends ArrayList<Bar> {
 
-    Random random = new Random();
-    double[] values;
+    private final Random random = new Random();
+    private double[] values;
     final int numOfBars;
 
-    public BarChart(int n) {
+    public BarChart(final int n) {
         this.numOfBars = n;
         this.values = new double[n];
         for (int i = 0; i < n; i++) {
@@ -25,21 +25,21 @@ public class BarChart extends ArrayList<Bar> {
         }
     }
 
-    public void SwapIndex(int i, int j) {
+    public void swapIndex(final int i, final int j) {
         Collections.swap(this, i, j);
     }
 
-    public double getValueOf(int index) {
+    public double getValueOf(final int index) {
         return values[index];
     }
 
-    public void SwapValues(int i, int j) {
+    public void SwapValues(final int i, final int j) {
         double tmp = values[i];
         values[i] = values[j];
         values[j] = tmp;
     }
 
-    public ParallelTransition SwapBars (int indexOfBar1, int indexOfBar2) {
+    public ParallelTransition SwapBars(final int indexOfBar1, final int indexOfBar2) {
         double speed = 70;
         Bar bar1 = this.get(indexOfBar1);
         Bar bar2 = this.get(indexOfBar2);
@@ -48,12 +48,12 @@ public class BarChart extends ArrayList<Bar> {
         ParallelTransition parallelTransition = new ParallelTransition();
         transition1.setByX(31);
         transition2.setByX(-31);
-        parallelTransition.getChildren().addAll(transition1,transition2);
-        this.SwapIndex(indexOfBar1, indexOfBar2);
+        parallelTransition.getChildren().addAll(transition1, transition2);
+        this.swapIndex(indexOfBar1, indexOfBar2);
         return parallelTransition;
     }
 
-    public SequentialTransition BubbleSort () {
+    public SequentialTransition BubbleSort() {
         SequentialTransition sequentialTransition = new SequentialTransition();
         for (int i = 0; i < numOfBars ; i++) {
             for (int j = 0; j < numOfBars - i - 1; j++ ) {
