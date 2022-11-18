@@ -7,11 +7,13 @@ import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
 
 public class BarChart extends ArrayList<Bar> {
 
+    Random random = new Random();
     double[] values;
-    int numOfBars;
+    final int numOfBars;
 
     public BarChart(int n) {
         this.numOfBars = n;
@@ -38,7 +40,7 @@ public class BarChart extends ArrayList<Bar> {
     }
 
     public ParallelTransition SwapBars (int indexOfBar1, int indexOfBar2) {
-        double speed = 100;
+        double speed = 70;
         Bar bar1 = this.get(indexOfBar1);
         Bar bar2 = this.get(indexOfBar2);
         TranslateTransition transition1 = new TranslateTransition(Duration.millis(speed), bar1);
@@ -65,4 +67,12 @@ public class BarChart extends ArrayList<Bar> {
         return sequentialTransition;
     }
 
+    void generateNewValues() {
+        for (int i = 0; i < numOfBars; i++) {
+            Bar bar = this.get(i);
+            int newHeight = random.nextInt(710)+20;
+            bar.setHeight(newHeight);
+            values[i] = newHeight;
+        }
+    }
 }

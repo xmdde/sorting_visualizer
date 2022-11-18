@@ -10,6 +10,7 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.time.Duration;
 
 public class Visualizer extends Application {
 
@@ -29,9 +30,17 @@ public class Visualizer extends Application {
         Scene scene = new Scene(borderPane, 1200, 750);
 
         sortBtn.setOnMouseClicked( e -> {
-            sortBtn.setDisable(true);
+            //genBtn.setVisible(false);
             SequentialTransition sort = barChart.BubbleSort();
             sort.play();
+            //genBtn.setVisible(true);
+        });
+
+        genBtn.setOnMouseClicked( e -> {
+            genBtn.setDisable(true);
+            sortBtn.setDisable(true);
+            barChart.generateNewValues();
+            genBtn.setDisable(false);
             sortBtn.setDisable(false);
         });
 
