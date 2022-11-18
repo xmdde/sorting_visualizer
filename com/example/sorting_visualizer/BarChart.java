@@ -33,7 +33,7 @@ public class BarChart extends ArrayList<Bar> {
         return values[index];
     }
 
-    public void SwapValues(final int i, final int j) {
+    public void swapValues(final int i, final int j) {
         double tmp = values[i];
         values[i] = values[j];
         values[j] = tmp;
@@ -58,11 +58,28 @@ public class BarChart extends ArrayList<Bar> {
         for (int i = 0; i < numOfBars ; i++) {
             for (int j = 0; j < numOfBars - i - 1; j++ ) {
                 if (this.getValueOf(j) > this.getValueOf(j+1)) {
-                    this.SwapValues(j, j+1);
+                    this.swapValues(j, j+1);
                     ParallelTransition swap = SwapBars(j, j+1);
                     sequentialTransition.getChildren().add(swap);
                 }
             }
+        }
+        return sequentialTransition;
+    }
+
+    public SequentialTransition insertionSort() {
+        SequentialTransition sequentialTransition = new SequentialTransition();
+        //double tmp = values[j];
+        for (int i = 0; i < numOfBars; i++) {
+            int j = i;
+            while (j > 0 && values[j-1] > values[j]) {
+                //values[j] = values[j-1];
+                swapValues(j-1, j);
+                ParallelTransition parallelTransition = SwapBars(j-1,j);
+                sequentialTransition.getChildren().add(parallelTransition);
+                j--;
+            }
+            //values[j]=tmp;
         }
         return sequentialTransition;
     }

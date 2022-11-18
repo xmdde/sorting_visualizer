@@ -20,9 +20,10 @@ public class Visualizer extends Application {
 
         BorderPane borderPane = new BorderPane();
         HBox hBox = new HBox();
-        Button sortBtn = new Button("Bubble Sort");
+        Button bsortBtn = new Button("Bubble Sort");
         Button genBtn = new Button("Generate");
-        HBox buttons = new HBox(sortBtn,genBtn);
+        Button isortBtn = new Button("Insertion Sort");
+        HBox buttons = new HBox(bsortBtn, isortBtn, genBtn);
         hBox.setAlignment(Pos.BOTTOM_CENTER);
         BarChart barChart = new BarChart(30);
         hBox.getChildren().addAll(barChart);
@@ -30,16 +31,34 @@ public class Visualizer extends Application {
         borderPane.setTop(buttons);
         Scene scene = new Scene(borderPane, 1200, 750);
 
-        sortBtn.setOnMouseClicked( e -> {
+        bsortBtn.setOnMouseClicked( e -> {
             genBtn.setDisable(true);
-            sortBtn.setDisable(true);
+            bsortBtn.setDisable(true);
+            isortBtn.setDisable(true);
             SequentialTransition sort = barChart.BubbleSort();
             sort.play();
             sort.setOnFinished(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
+                    isortBtn.setDisable(false);
                     genBtn.setDisable(false);
-                    sortBtn.setDisable(false);
+                    bsortBtn.setDisable(false);
+                }
+            });
+        });
+
+        isortBtn.setOnMouseClicked( e -> {
+            genBtn.setDisable(true);
+            bsortBtn.setDisable(true);
+            isortBtn.setDisable(true);
+            SequentialTransition sort = barChart.insertionSort();
+            sort.play();
+            sort.setOnFinished(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent actionEvent) {
+                    isortBtn.setDisable(false);
+                    genBtn.setDisable(false);
+                    bsortBtn.setDisable(false);
                 }
             });
         });
